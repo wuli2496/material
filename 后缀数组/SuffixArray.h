@@ -1,12 +1,10 @@
 #ifndef SUFFIXARRAY_H
 #define SUFFIXARRAY_H
 
-#include <string>
-
 class SuffixArray
 {
 public:
-    SuffixArray(std::string s);
+    SuffixArray(int* pa, int n);
     ~SuffixArray();
     
     void buildSa();
@@ -19,7 +17,7 @@ private:
     int *m_pheight;
     int *m_psa;
     int m_n;
-    std::string m_str;
+    int* m_a;
 };
 
 #endif // SUFFIXARRAY_H

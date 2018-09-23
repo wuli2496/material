@@ -8,11 +8,11 @@ using namespace std;
 
 const int N = 256;
 
-SuffixArray::SuffixArray(std::string s)
+SuffixArray::SuffixArray(int* pa, int n)
     :m_prank(NULL), m_pheight(NULL),  m_psa(NULL)
 {
-    m_str = s;
-    m_n = m_str.length();
+    m_a = pa;
+    m_n = n;
 }
 
 SuffixArray::~SuffixArray()
@@ -34,7 +34,7 @@ void SuffixArray::buildSa()
     memset(c, 0, sizeof(int) * n);
     for (int i = 0; i < m_n; i++)
     {
-        m_prank[i] = m_str[i];
+        m_prank[i] = m_a[i];
         c[m_prank[i]]++;
     }
     
@@ -126,7 +126,7 @@ void SuffixArray::getHeight()
         {
             k--;
         }
-        while (i + k < m_n && j + k < m_n && m_str[i + k] == m_str[j + k]) k++;
+        while (i + k < m_n && j + k < m_n && m_a[i + k] == m_a[j + k]) k++;
         m_pheight[m_prank[i]] = k;
     }
 }
