@@ -8,10 +8,10 @@ public:
     ~SuffixArray();
     
     void buildSa();
-    void getHeight();
+    void buildHeight();
     
     const int* getSa();
-    const int* getH();
+    const int* getHeight();
 private:
     int *m_prank;
     int *m_pheight;

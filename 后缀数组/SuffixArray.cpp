@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int N = 256;
+const int N = 360;
 
 SuffixArray::SuffixArray(int* pa, int n)
     :m_prank(NULL), m_pheight(NULL),  m_psa(NULL)
@@ -110,7 +110,7 @@ void SuffixArray::buildSa()
     return;
 }
 
-void SuffixArray::getHeight()
+void SuffixArray::buildHeight()
 {
     m_pheight[0] = 0;
     
@@ -136,7 +136,7 @@ const int* SuffixArray::getSa()
    return m_psa;
 }
 
-const int* SuffixArray::getH()
+const int* SuffixArray::getHeight()
 {
     return m_pheight;
 }
