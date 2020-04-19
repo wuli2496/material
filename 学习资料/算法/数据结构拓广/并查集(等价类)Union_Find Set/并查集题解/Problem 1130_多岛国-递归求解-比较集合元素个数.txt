@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+int *set;
+void Init_Set(int n){
+	for(int i=0;i<n;i++)
+		set[i]=-1;
+}
+int Find_Set(int id){
+	if(set[id]<0) return id;
+	set[id]=Find_Set(set[id]);
+    return set[id];
+}
+void Union_Set(int set1,int set2){
+	int set1_parent=Find_Set(set1-1),set2_parent=Find_Set(set2-1);
+	if(set1_parent==set2_parent) return;
+	if(set[set1_parent]<=set[set2_parent]) {
+		set[set1_parent]+=set[set2_parent];
+	    set[set2_parent]=set1_parent;
+	}
+	else{
+		set[set2_parent]+=set[set1_parent];
+		set[set1_parent]=set2_parent;
+	}
+}
+void Merge_Set(int m){
+	int set1,set2;
+	for(int i=0;i<m;i++){
+		scanf("%d%d",&set1,&set2);
+		Union_Set(set1,set2);
+	}
+}
+void Operate_Set(int k){
+	int set1,set2;
+	char ch;
+	for(int i=0;i<k;i++){
+		cin>>ch;
+		scanf("%d%d",&set1,&set2);
+		if(ch=='Q'){
+			if(Find_Set(set1-1)==Find_Set(set2-1))
+				printf("yes\n");
+			else printf("no\n");
+		}
+		else Union_Set(set1,set2);
+	}
+}
+int main(){
+	int n,m,k;
+	scanf("%d%d",&n,&m);
+	set=new int[n];
+	Init_Set(n);
+	Merge_Set(m);
+	scanf("%d",&k);
+	Operate_Set(k);
+	delete []set;
+	return 0;
+}

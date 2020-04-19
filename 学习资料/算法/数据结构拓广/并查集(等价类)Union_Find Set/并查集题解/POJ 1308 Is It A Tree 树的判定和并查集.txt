@@ -1,0 +1,74 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+int const MAXN=101;
+int set[MAXN],rank[MAXN];
+bool visit[MAXN];
+void Init()
+{
+	memset(visit,false,sizeof(visit));
+    memset(set,-1,sizeof(set));
+	memset(rank,0,sizeof(rank));
+}
+int find(int x)
+{
+	return set[x]==-1?x:(set[x]=find(set[x]));
+}
+void merge(int x,int y)
+{
+	if(rank[x]>rank[y])
+		set[y]=x;
+	else
+	{
+		set[x]=y;
+		if(rank[x]==rank[y]) rank[y]++;
+	}
+}
+int main()
+{
+	//freopen("test.txt","r",stdin);
+	int a,b,ans(0),edge_num(0),node_num(0);
+	Init();
+	while(scanf("%d%d",&a,&b)!=EOF)
+	{
+		if(a==-1) break;
+		if(a==0)
+		{
+			if(edge_num==0)
+				printf("Case %d is a tree.\n",++ans);
+			else
+			{
+				if(edge_num!=node_num-1)
+					printf("Case %d is not a tree.\n",++ans);
+				else printf("Case %d is a tree.\n",++ans);
+				edge_num=node_num=0;
+				Init();
+			}
+			continue;
+		}
+		if(a==b)
+		{
+			while(scanf("%d%d",&a,&b)&&a!=0);
+			edge_num=node_num=0;
+			printf("Case %d is not a tree.\n",++ans);
+			Init();
+			continue;
+		}
+		int x=find(a),y=find(b);
+		if(x==y)
+		{
+			while(scanf("%d%d",&a,&b)&&a!=0);
+			edge_num=node_num=0;
+			printf("Case %d is not a tree.\n",++ans);
+			Init();
+		}
+		else
+		{
+			edge_num++;
+			merge(x,y);
+			if(!visit[a]) {node_num++;visit[a]=true;}
+			if(!visit[b]) {node_num++;visit[b]=true;}
+		}
+	}
+	return 0;
+}

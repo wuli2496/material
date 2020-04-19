@@ -1,0 +1,13 @@
+int getfather(int v)  
+{ 
+    return (father[v]==0)?v:(father[v]=getfather(father[v])); 
+} 
+void merge(int i,int j) 
+{ 
+    i=getfather(i); 
+    j=getfather(j); 
+    if (i<j) 
+        father[j]=i; 
+    if (j<i) 
+        father[i]=j; 
+} 

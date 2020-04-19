@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+int *s;
+int find_root(int x){
+	int r=x,i=x;
+	while(s[r]>=0)
+		r=s[r];
+	while(x!=r)
+	{
+		i=s[x];
+		s[x]=r;
+		x=i;
+	}
+	return r;
+}
+
+void merge(int a,int b){
+	int k=find_root(a-1),l=find_root(b-1);
+	if(k==l) return;
+	if(s[l]<=s[k]) {
+		s[l]+=s[k];
+	    s[k]=l;
+	}
+	else{
+		s[k]+=s[l];
+		s[l]=k;
+	}
+}
+int main(){
+	int n,m,i,a,b;
+	char ch;
+	scanf("%d%d",&n,&m);
+	s=new int[n];
+	for(i=0;i<n;i++){
+		s[i]=-1;
+	}
+	for(i=0;i<m;i++)
+	{
+		scanf("%d%d",&a,&b);
+		merge(a,b);
+	}
+	scanf("%d",&m);
+	for(i=0;i<m;i++)
+	{
+		cin>>ch;
+		scanf("%d%d",&a,&b);
+		if(ch=='Q')
+		{
+			if(find_root(a-1)==find_root(b-1))
+				printf("yes\n");
+			else printf("no\n");
+		}
+		else merge(a,b);
+	}
+	delete []s;
+	return 0;
+}

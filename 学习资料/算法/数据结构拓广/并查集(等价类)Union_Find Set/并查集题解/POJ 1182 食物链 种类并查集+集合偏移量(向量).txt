@@ -1,0 +1,63 @@
+#include<iostream>
+//#include<fstream>
+int const MAXN=50001;//有关系属于同一个集合，无关系不属于同一个集合
+int set[MAXN],relation[MAXN];//rank[MAXN];//X,Y有如下三种关系(relation)：0：X,Y属于同一类  1：X吃Y    2：X被Y吃(可以自个定义,影响的只是谁合并谁对应的推导关系)
+int N,K,ans(0);   //N只动物,K句话,说假话的次数
+void Init_set()
+{
+	for(int i=1;i<=N;i++)
+	{
+		set[i]=i;
+		relation[i]=0; //自己跟自己属于同一类
+		//rank[i]=0;
+	}
+}
+int Find_root(int x)
+{
+	if(set[x]!=x)
+	{
+		int root=Find_root(set[x]); //取得根结点的数组下标
+		relation[x]=(relation[x]+relation[set[x]])%3; //路径压缩过程中,重置当前结点与父结点的父结点的关系,即与根结点的关系
+		set[x]=root; //路径压缩，指向根结点
+	}
+	return set[x]; //返回根结点的数组下标
+}
+void Check_lies()
+{
+	while(K--)
+	{
+		int D,X,Y,rx,ry;
+		scanf("%d%d%d",&D,&X,&Y);
+		if(D==1&&X==Y&&X<=N) continue; //自己跟自己是同类，这句永远是真话
+		if((X>N||Y>N)||(D==2&&X==Y)||(((rx=Find_root(X))==(ry=Find_root(Y))&&relation[X]!=(D-1+relation[Y])%3)))
+		{
+			ans++;     //X或Y大于N，X吃X都是假话;X,Y属于同一个集合,即已有关系,只需判断关系的真假
+			continue;  //relation[X]!=(D-1+relation[Y])%3等价于relation[X]-relation[Y]+3)%3!=D-1
+		}              //等价于relation[X]!=relation[Y](D=1)和relation[X]-relation[Y]+3)%3!=1(D=2)
+		if(rx!=ry)     //真话时,需要合并两个集合,合并时要不要比较树的深度,此题差别不大
+		{
+			set[rx]=ry;//可以分解为(relation[Y]-relation[X]+3)%3和(relation[Y]-relation[X]+4)%3
+			relation[rx]=(D-1+relation[Y]-relation[X]+3)%3;//即(D+relation[Y]-relation[X]+2)%3
+            /*if(rank[rx]>rank[ry])
+			{
+				set[ry]=rx;
+				relation[ry]=(relation[X]-relation[Y]-D+4)%3;
+			}
+            else
+			{
+				set[rx]=ry;
+			    relation[rx]=(D+relation[Y]-relation[X]+2)%3;
+				if(rank[rx]==rank[ry]) rank[ry]++;
+			}*/
+		}
+	}
+}
+int main()
+{
+	//freopen("test.txt","r",stdin);
+	scanf("%d%d",&N,&K);
+	Init_set();
+	Check_lies();
+	printf("%d\n",ans);
+	return 0;
+}

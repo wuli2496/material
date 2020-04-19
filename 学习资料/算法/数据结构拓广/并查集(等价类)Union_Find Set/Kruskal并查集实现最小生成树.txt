@@ -1,0 +1,69 @@
+#define MAX 100
+#include <iostream>   
+using namespace std;   
+struct edge   
+{   
+    int cost;   
+    int first;   
+    int second;   
+};   
+int set[MAX];   
+edge my_pair[MAX];
+int rank[MAX]; 
+int FindSet(int x)
+{
+    if(set[x]!=x)
+        set[x]=FindSet(set[x]);
+    return set[x];
+}
+void MakeSet(int n)
+{
+	for(int i=1;i<=n;i++){
+        set[i]=i;rank[i]=0;
+	}
+}  
+void Link(int a,int b)
+{
+    if(rank[a]>rank[b])
+        set[b]=a;
+    else if(rank[a]<rank[b])
+        set[a]=b;
+    else
+    {
+        set[a]=b;
+        rank[b]++;
+    }
+}
+void Union(int a,int b)
+{
+    Link(FindSet(a),FindSet(b));
+}
+int my_cmp(const void* a,const void* b)   
+{     
+    return (*(edge*)a).cost-(*(edge*)b).cost;         
+}   
+int main()   
+{   
+    int N,M,lowcost(0),i,count(1); 
+    scanf("%d%d",&N,&M);   
+	MakeSet(N);
+    for(i=0;i<M;i++)   
+    {   
+        scanf("%d%d%d",&my_pair[i].first,&my_pair[i].second,&my_pair[i].cost);   
+    }   
+    qsort(my_pair,M,sizeof(edge),my_cmp);   
+    for(i=0;i<M&&count<N;i++)   
+    {
+		int first_root=FindSet(my_pair[i].first);
+		int second_root=FindSet(my_pair[i].second);
+        if(first_root!=second_root)   
+        {   
+            Union(first_root,second_root);
+			printf("%d----%d\n",my_pair[i].first,my_pair[i].second);
+			lowcost+=my_pair[i].cost;
+			count++;
+        } 
+    }
+    printf("%d\n",lowcost);  
+    return 0;   
+}

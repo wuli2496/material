@@ -1,0 +1,51 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+int const MAX=30000; 
+int set[MAX],n,m;;
+void Init()
+{
+	for(int i=0;i<n;i++)
+		set[i]=-1;
+}
+int find(int x)
+{
+	return set[x]<0?x:(set[x]=find(set[x]));
+}
+void merge(int a,int b)
+{
+	int x=find(a),y=find(b);
+	if(x==y) return;
+	if(x<y)
+	{
+		set[x]+=set[y];
+		set[y]=x;
+	}
+	else
+	{
+		set[y]+=set[x];
+		set[x]=y;
+	}
+}
+int main()
+{
+	freopen("test.txt","r",stdin);
+	while(scanf("%d%d",&n,&m)!=EOF&&!(n==0&&m==0))
+	{
+		Init();
+		while(m--)
+		{
+			int k,a,b,xa,xb;
+			scanf("%d%d",&k,&a);
+			xa=find(a);
+			while(--k)
+			{
+				scanf("%d",&b);
+				xb=find(b);
+				merge(a,b);
+			}
+		}
+		printf("%d\n",-set[find(0)]);
+	}
+	return 0;
+}
