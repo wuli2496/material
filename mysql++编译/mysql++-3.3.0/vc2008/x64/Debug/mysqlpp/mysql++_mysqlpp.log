@@ -1,0 +1,33 @@
+﻿E:\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.Cpp.Analysis.props(24,5): warning MSB4211: 正在首次将属性“MsvcAnalysisPluginPath”设置为某个值，但已在“E:\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CodeAnalysis.Extensions.props (33,5)”处使用了该属性。
+  beemutex.cpp
+  cmdline.cpp
+  connection.cpp
+  cpool.cpp
+  datetime.cpp
+  dbdriver.cpp
+  field_names.cpp
+  field_types.cpp
+  manip.cpp
+  myset.cpp
+  mysql++.cpp
+  mystring.cpp
+  null.cpp
+  options.cpp
+  qparms.cpp
+  query.cpp
+  result.cpp
+  row.cpp
+  scopedconnection.cpp
+  sqlstream.cpp
+  sql_buffer.cpp
+  ssqls2.cpp
+  stadapter.cpp
+  tcp_connection.cpp
+  transaction.cpp
+  type_info.cpp
+  uds_connection.cpp
+  utility.cpp
+  vallist.cpp
+  wnp_connection.cpp
+    正在创建库 x64\Debug\mysqlpp_d.lib 和对象 x64\Debug\mysqlpp_d.exp
+  mysql++_mysqlpp.vcxproj -> F:\code\mysql++-3.3.0\vc2008\x64\Debug\mysqlpp_d.dll
